@@ -82,9 +82,9 @@ export default function Navbar({
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-md transition-colors dark:border-slate-800 dark:bg-slate-950/95 dark:text-white">
+    <header className="sticky top-0 z-50 w-full border-b border-white/20 bg-white/70 backdrop-blur-xl transition-colors shadow-[0_2px_20px_rgba(0,0,0,0.02)] dark:border-slate-900/30 dark:bg-slate-950/75 dark:text-white">
       {/* Top bar with quick notification & settings */}
-      <div className="flex h-10 w-full items-center justify-between bg-brand-green-700 px-4 text-xs font-medium text-white sm:px-8">
+      <div className="flex h-10 w-full items-center justify-between bg-brand-green-950/95 border-b border-white/10 px-4 text-xs font-medium text-white sm:px-8 backdrop-blur-md">
         <div className="flex items-center space-x-4">
           <span className="flex items-center space-x-1">
             <ShieldCheck className="h-4 w-4 text-brand-gold-light" />
@@ -192,7 +192,7 @@ export default function Navbar({
             placeholder="Search farm fresh produce..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-full border border-gray-200 bg-gray-50 py-1.5 pl-4 pr-10 text-xs transition focus:border-brand-green-500 focus:bg-white focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:focus:bg-slate-950"
+            className="w-full rounded-full border border-gray-200/55 bg-gray-100/45 backdrop-blur-md py-1.5 pl-4 pr-10 text-xs transition focus:border-brand-green-500 focus:bg-white/95 focus:outline-none dark:border-slate-800/70 dark:bg-slate-900/50 dark:focus:bg-slate-950/80"
           />
           <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-green-500">
             <Search className="h-4 w-4" />

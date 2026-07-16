@@ -16,6 +16,7 @@ import FAQView from './components/FAQView';
 import ContactView from './components/ContactView';
 import DashboardView from './components/DashboardView';
 import PolicyViews from './components/PolicyViews';
+import AuthView from './components/AuthView';
 
 import { Product, CartItem, Order, CustomerInfo } from './types';
 import { PRODUCTS } from './data';
@@ -32,7 +33,19 @@ export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [language, setLanguage] = useState<string>('en');
   const [currency, setCurrency] = useState<'NGN' | 'USD' | 'EUR'>('NGN');
-  const [userRole, setUserRole] = useState<'customer' | 'supplier' | 'admin' | null>('customer');
+  const [userRole, setUserRole] = useState<'customer' | 'supplier' | 'admin' | null>(() => {
+    const cached = localStorage.getItem('ashshuruk_active_role');
+    return (cached as any) || null;
+  });
+
+  // Keep userRole session state in localStorage
+  useEffect(() => {
+    if (userRole) {
+      localStorage.setItem('ashshuruk_active_role', userRole);
+    } else {
+      localStorage.removeItem('ashshuruk_active_role');
+    }
+  }, [userRole]);
 
   // Load cart & wishlist from localStorage on mount
   useEffect(() => {
@@ -283,11 +296,29 @@ export default function App() {
           <DashboardView 
             wishlist={wishlist}
             setView={handleSetView}
+            userRole={userRole}
+            setUserRole={setUserRole}
           />
         )}
 
         {view === 'policy' && (
           <PolicyViews />
+        )}
+
+        {view === 'login' && (
+          <AuthView 
+            initialMode="login"
+            setView={handleSetView}
+            setUserRole={setUserRole}
+          />
+        )}
+
+        {view === 'register' && (
+          <AuthView 
+            initialMode="register"
+            setView={handleSetView}
+            setUserRole={setUserRole}
+          />
         )}
       </div>
 

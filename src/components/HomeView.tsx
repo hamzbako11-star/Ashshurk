@@ -75,35 +75,35 @@ export default function HomeView({
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent" />
         
         <div className="relative mx-auto max-w-7xl h-full px-4 sm:px-8 flex flex-col justify-center">
-          <div className="max-w-2xl space-y-5 animate-fade-in">
-            <span className="inline-flex items-center space-x-1.5 rounded-full bg-brand-green-600/30 px-3.5 py-1 text-xs font-bold text-emerald-400 border border-brand-green-500/20">
-              <Sparkles className="h-3.5 w-3.5 text-brand-gold" />
+          <div className="max-w-2xl p-6 sm:p-10 rounded-3xl bg-slate-950/50 backdrop-blur-xl border border-white/15 shadow-[0_24px_50px_-15px_rgba(0,0,0,0.5)] space-y-5 animate-fade-in dark:bg-slate-950/70">
+            <span className="inline-flex items-center space-x-1.5 rounded-full bg-brand-green-500/20 px-3.5 py-1 text-xs font-bold text-emerald-300 border border-brand-green-500/30">
+              <Sparkles className="h-3.5 w-3.5 text-brand-gold animate-pulse" />
               <span>{heroSlides[activeHeroIndex].badge}</span>
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none text-white">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white">
               {heroSlides[activeHeroIndex].title}
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans">
               {heroSlides[activeHeroIndex].subtitle}
             </p>
             
             <div className="flex flex-wrap gap-3 pt-2">
               <button 
                 onClick={() => handleCategoryClick('all')}
-                className="rounded-full bg-brand-green-600 hover:bg-brand-green-700 px-7 py-3 text-xs font-bold text-white shadow-lg shadow-brand-green-600/20 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center space-x-1"
+                className="rounded-full bg-brand-green-600 hover:bg-brand-green-500 px-7 py-2.5 text-xs font-bold text-white shadow-lg shadow-brand-green-600/35 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center space-x-1"
               >
                 <span>Shop Fresh Now</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
               <button 
                 onClick={() => handleCategoryClick('live-chicken')}
-                className="rounded-full bg-slate-800/80 hover:bg-slate-800 px-6 py-3 text-xs font-bold text-slate-100 border border-slate-700 hover:text-white transition"
+                className="rounded-full bg-white/10 hover:bg-white/20 px-6 py-2.5 text-xs font-bold text-slate-100 border border-white/10 hover:text-white transition-all duration-300"
               >
                 Browse Live Birds
               </button>
               <button 
                 onClick={() => setView('dashboard')}
-                className="rounded-full bg-transparent hover:bg-white/5 px-6 py-3 text-xs font-bold text-brand-gold hover:text-white transition border border-brand-gold/30"
+                className="rounded-full bg-brand-gold/15 hover:bg-brand-gold/25 px-6 py-2.5 text-xs font-bold text-brand-gold-light hover:text-white transition-all duration-300 border border-brand-gold/30"
               >
                 Become a Partner Supplier
               </button>
@@ -144,18 +144,18 @@ export default function HomeView({
             <button
               key={cat.id}
               onClick={() => handleCategoryClick(cat.id)}
-              className="group relative flex flex-col items-center justify-center rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition hover:border-brand-green-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700 text-center cursor-pointer overflow-hidden"
+              className="group relative flex flex-col items-center justify-center rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md p-6 shadow-sm spatial-card hover:bg-white/70 dark:border-slate-900/30 dark:bg-slate-950/40 dark:hover:bg-slate-950/60 dark:hover:border-brand-green-500/30 text-center cursor-pointer overflow-hidden"
             >
               {/* background zoom blur effect */}
-              <div className="absolute inset-0 bg-brand-green-50 opacity-0 group-hover:opacity-100 transition duration-300 dark:bg-brand-green-950/10" />
+              <div className="absolute inset-0 bg-brand-green-100/20 opacity-0 group-hover:opacity-100 transition duration-500 dark:bg-brand-green-950/10" />
               
-              <div className="relative text-3xl mb-3 transform group-hover:scale-110 transition duration-300">
+              <div className="relative text-3xl mb-3 transform group-hover:scale-110 transition duration-500">
                 {cat.icon}
               </div>
-              <h4 className="relative text-xs font-bold text-slate-800 group-hover:text-brand-green-700 dark:text-slate-200 dark:group-hover:text-brand-green-400 transition">
+              <h4 className="relative text-xs font-display font-bold text-slate-800 group-hover:text-brand-green-700 dark:text-slate-200 dark:group-hover:text-brand-green-400 transition">
                 {cat.name.replace(/^[^\s]+\s/, '')}
               </h4>
-              <p className="relative text-[10px] text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition duration-300">
+              <p className="relative text-[9px] font-mono uppercase tracking-wider text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition duration-500">
                 Browse Items →
               </p>
             </button>
@@ -236,7 +236,7 @@ export default function HomeView({
           {featuredProducts.map((p) => (
             <div 
               key={p.id}
-              className="group relative flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:border-brand-green-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 overflow-hidden"
+              className="group relative flex flex-col rounded-2xl border border-gray-150/40 bg-white/45 backdrop-blur-md shadow-sm spatial-card hover:bg-white/90 hover:border-brand-green-250 dark:border-slate-800/40 dark:bg-slate-900/40 dark:hover:bg-slate-900/80 overflow-hidden"
             >
               {/* Wishlist overlay button */}
               <button
@@ -377,8 +377,8 @@ export default function HomeView({
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="space-y-3 p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800/40">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900 dark:text-white font-bold text-lg">
+            <div className="space-y-3 p-6 rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md shadow-sm spatial-card hover:bg-white/70 dark:border-slate-900/30 dark:bg-slate-950/40 dark:hover:bg-slate-950/60">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/60 dark:text-white font-bold text-lg shadow-sm">
                 🌱
               </div>
               <h4 className="font-display text-sm font-semibold text-slate-800 dark:text-white">100% Organic Feeding</h4>
@@ -387,8 +387,8 @@ export default function HomeView({
               </p>
             </div>
 
-            <div className="space-y-3 p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800/40">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-amber-100 text-amber-600 dark:bg-amber-900 dark:text-white font-bold text-lg">
+            <div className="space-y-3 p-6 rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md shadow-sm spatial-card hover:bg-white/70 dark:border-slate-900/30 dark:bg-slate-950/40 dark:hover:bg-slate-950/60">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-amber-100 text-amber-600 dark:bg-amber-900/60 dark:text-white font-bold text-lg shadow-sm">
                 🧼
               </div>
               <h4 className="font-display text-sm font-semibold text-slate-800 dark:text-white">Rigorous Sanitary Cleaning</h4>
@@ -397,8 +397,8 @@ export default function HomeView({
               </p>
             </div>
 
-            <div className="space-y-3 p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800/40">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-white font-bold text-lg">
+            <div className="space-y-3 p-6 rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md shadow-sm spatial-card hover:bg-white/70 dark:border-slate-900/30 dark:bg-slate-950/40 dark:hover:bg-slate-950/60">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/60 dark:text-white font-bold text-lg shadow-sm">
                 🚛
               </div>
               <h4 className="font-display text-sm font-semibold text-slate-800 dark:text-white">Cold-Chain Logistical Protection</h4>
@@ -426,7 +426,7 @@ export default function HomeView({
             {TESTIMONIALS.map((t) => (
               <div 
                 key={t.id}
-                className="rounded-2xl bg-white p-6 shadow-sm border border-gray-100 dark:bg-slate-900 dark:border-slate-800 flex flex-col justify-between"
+                className="rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md p-6 shadow-sm spatial-card hover:bg-white/70 dark:border-slate-900/30 dark:bg-slate-950/40 dark:hover:bg-slate-950/60 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center space-x-1 text-brand-gold mb-3">

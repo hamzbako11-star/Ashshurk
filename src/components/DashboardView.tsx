@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   User, ShieldCheck, ClipboardList, TrendingUp, DollarSign, Sprout, 
   CheckCircle, AlertTriangle, Plus, Users, Landmark, FileCheck, 
@@ -10,10 +10,45 @@ import { PRODUCTS } from '../data';
 interface DashboardViewProps {
   wishlist: Product[];
   setView: (view: string) => void;
+  userRole: 'customer' | 'supplier' | 'admin' | null;
+  setUserRole: (role: 'customer' | 'supplier' | 'admin' | null) => void;
 }
 
-export default function DashboardView({ wishlist, setView }: DashboardViewProps) {
-  const [activeRole, setActiveRole] = useState<'customer' | 'supplier' | 'admin'>('customer');
+export default function DashboardView({ wishlist, setView, userRole, setUserRole }: DashboardViewProps) {
+  const [activeRole, setActiveRole] = useState<'customer' | 'supplier' | 'admin'>(() => {
+    return userRole || 'customer';
+  });
+
+  // Get active user data from localStorage
+  const activeUser = (() => {
+    try {
+      const usersRaw = localStorage.getItem('ashshuruk_users') || '[]';
+      const usersList = JSON.parse(usersRaw);
+      
+      // Look up currently active role to find matching user if there is an active role
+      if (userRole) {
+        const found = usersList.find((u: any) => u.role === userRole);
+        if (found) return found;
+      }
+      
+      // Fallback
+      return { name: 'Sandra James', email: 'sandra@gmail.com', role: 'customer' };
+    } catch (e) {
+      return { name: 'Sandra James', email: 'sandra@gmail.com', role: 'customer' };
+    }
+  })();
+
+  // Synchronize state when external userRole changes
+  useEffect(() => {
+    if (userRole) {
+      setActiveRole(userRole);
+    }
+  }, [userRole]);
+
+  const handleRoleChange = (role: 'customer' | 'supplier' | 'admin') => {
+    setActiveRole(role);
+    setUserRole(role);
+  };
   
   // Supplier State
   const [supplyName, setSupplyName] = useState('');
@@ -61,7 +96,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
       
       {/* 1. ROLE SWITCHER BAR */}
-      <div className="mb-8 rounded-2xl bg-white border border-gray-100 p-3 shadow-sm flex flex-wrap gap-2 justify-between items-center dark:bg-slate-900 dark:border-slate-800">
+      <div className="mb-8 rounded-2xl border border-white/50 bg-white/45 backdrop-blur-xl p-3 shadow-md flex flex-wrap gap-2 justify-between items-center dark:border-slate-900/40 dark:bg-slate-950/45 spatial-card">
         <div className="flex items-center space-x-2">
           <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
           <span className="text-xs font-bold text-slate-800 dark:text-slate-100">Portal Role Router:</span>
@@ -69,7 +104,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
 
         <div className="flex gap-1.5">
           <button
-            onClick={() => setActiveRole('customer')}
+            onClick={() => handleRoleChange('customer')}
             className={`rounded-xl px-4 py-2 text-xs font-bold transition flex items-center space-x-1.5 ${
               activeRole === 'customer'
                 ? 'bg-brand-green-600 text-white shadow'
@@ -81,7 +116,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
           </button>
 
           <button
-            onClick={() => setActiveRole('supplier')}
+            onClick={() => handleRoleChange('supplier')}
             className={`rounded-xl px-4 py-2 text-xs font-bold transition flex items-center space-x-1.5 ${
               activeRole === 'supplier'
                 ? 'bg-brand-green-600 text-white shadow'
@@ -93,7 +128,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
           </button>
 
           <button
-            onClick={() => setActiveRole('admin')}
+            onClick={() => handleRoleChange('admin')}
             className={`rounded-xl px-4 py-2 text-xs font-bold transition flex items-center space-x-1.5 ${
               activeRole === 'admin'
                 ? 'bg-brand-green-600 text-white shadow'
@@ -118,18 +153,18 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
             {/* Shopper Loyalty & stats */}
             <div className="grid gap-6 md:grid-cols-3">
               {/* Profile card */}
-              <div className="rounded-2xl border border-gray-150 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800 space-y-4">
+              <div className="rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md p-6 shadow-sm dark:bg-slate-900/40 dark:border-slate-800/40 space-y-4 spatial-card hover:bg-white/60">
                 <div className="flex items-center space-x-3">
                   <div className="h-12 w-12 rounded-full bg-brand-green-100 text-brand-green-600 dark:bg-brand-green-950 dark:text-brand-green-400 flex items-center justify-center font-bold text-lg">
                     🧑‍🌾
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-slate-850 dark:text-white">Sandra James</h3>
-                    <p className="text-[10px] text-slate-400">Shopper Account • Verified</p>
+                    <h3 className="font-bold text-sm text-slate-850 dark:text-white">{activeUser.name}</h3>
+                    <p className="text-[10px] text-slate-400">{activeUser.email} • Verified Profile</p>
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-brand-green-50/50 p-3.5 border border-brand-green-100/50 dark:bg-slate-950 dark:border-slate-850 space-y-1">
+                <div className="rounded-xl bg-brand-green-50/50 p-3.5 border border-brand-green-100/50 dark:bg-slate-950/60 dark:border-slate-850 space-y-1">
                   <p className="font-bold text-[11px] text-slate-700 dark:text-slate-200 flex items-center">
                     <Award className="h-4 w-4 mr-1 text-brand-gold fill-brand-gold" /> Golden Crop Loyalty Club
                   </p>
@@ -139,7 +174,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
               </div>
 
               {/* Saved logistics address */}
-              <div className="rounded-2xl border border-gray-150 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800 space-y-3 flex flex-col justify-between">
+              <div className="rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md p-6 shadow-sm dark:bg-slate-900/40 dark:border-slate-800/40 space-y-3 flex flex-col justify-between spatial-card hover:bg-white/60">
                 <div>
                   <h4 className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Saved Delivery Addresses</h4>
                   <p className="font-bold text-slate-800 dark:text-white mt-1.5">Primary Residence:</p>
@@ -147,14 +182,14 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
                 </div>
                 <button
                   onClick={() => alert('Saved address updates simulated!')}
-                  className="text-brand-green-600 dark:text-brand-green-400 font-bold hover:underline self-start"
+                  className="text-brand-green-600 dark:text-brand-green-400 font-bold hover:underline self-start text-xs"
                 >
                   Manage Address Profiles →
                 </button>
               </div>
 
               {/* Saved Wishlist shortcut stats */}
-              <div className="rounded-2xl border border-gray-150 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800 space-y-3 flex flex-col justify-between">
+              <div className="rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md p-6 shadow-sm dark:bg-slate-900/40 dark:border-slate-800/40 space-y-3 flex flex-col justify-between spatial-card hover:bg-white/60">
                 <div>
                   <h4 className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Wishlist Catalog</h4>
                   <p className="text-slate-500 mt-1.5 leading-relaxed">
@@ -163,7 +198,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
                 </div>
                 <button
                   onClick={() => setView('shop')}
-                  className="text-brand-green-600 dark:text-brand-green-400 font-bold hover:underline self-start"
+                  className="text-brand-green-600 dark:text-brand-green-400 font-bold hover:underline self-start text-xs"
                 >
                   View Saved Wishlist →
                 </button>
@@ -171,7 +206,7 @@ export default function DashboardView({ wishlist, setView }: DashboardViewProps)
             </div>
 
             {/* Shopper Transaction Logs */}
-            <div className="rounded-2xl border border-gray-150 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800">
+            <div className="rounded-2xl border border-white/40 bg-white/45 backdrop-blur-md p-6 shadow-sm dark:bg-slate-900/40 dark:border-slate-800/40">
               <h4 className="font-display text-sm font-bold text-slate-850 dark:text-white mb-4">Historical Orders & Invoices</h4>
               
               <div className="border border-gray-100 rounded-xl overflow-hidden dark:border-slate-850">

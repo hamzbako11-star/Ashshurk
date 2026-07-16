@@ -12,6 +12,7 @@
   --color-brand-green-500: #16a34a;
   --color-brand-green-600: #15803d;
   --color-brand-green-700: #166534;
+  --color-brand-green-950: #052e16;
   --color-brand-gold: #d97706;
   --color-brand-gold-light: #fef3c7;
   --color-brand-charcoal: #0f172a;
@@ -22,5 +23,87 @@
     font-family: var(--font-sans);
     background-color: #fafbf9;
     color: var(--color-brand-charcoal);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  body.dark {
+    background-color: #04080f;
+    color: #f1f5f9;
   }
 }
+
+/* Apple Vision Spatial Utilities */
+.glass-morphic {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-morphic-dark {
+  background: rgba(10, 15, 30, 0.6);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.spatial-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spatial-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 20px 40px -15px rgba(22, 163, 74, 0.12);
+}
+
+.vision-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.vision-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.4), rgba(217, 119, 6, 0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.vision-glow-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(22, 163, 74, 0.25));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.badge-glow {
+  box-shadow: 0 0 12px rgba(22, 163, 74, 0.5);
+  animation: badge-pulse 2s infinite alternate;
+}
+
+@keyframes badge-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 4px rgba(22, 163, 74, 0.4); }
+  100% { transform: scale(1.08); box-shadow: 0 0 16px rgba(22, 163, 74, 0.7); }
+}
+
+@keyframes bounce-short {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-bounce-short {
+  animation: bounce-short 1.5s infinite;
+}
+
