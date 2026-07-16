@@ -1,0 +1,6 @@
+{
+  "name": "Ashshuruk Ventures",
+  "description": "A Premium Online Poultry & Fresh Farm Produce Marketplace",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
